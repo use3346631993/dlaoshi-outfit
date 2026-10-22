@@ -983,6 +983,34 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         balanceTimer.current = setTimeout(() => setBalanceOpen(false), ms === undefined ? BUBBLE_HOLD_MS : ms)
       }
 
+      // The standee belongs to the conversation view only: settings, the plugin
+      // manager and other secondary pages are modal dialogs or replace the chat
+      // pane, and the standee must not float over them.
+      const [onChat, setOnChat] = useState(true)
+      useEffect(() => {
+        if (typeof document === 'undefined') return undefined
+        const check = () => {
+          let visible = true
+          try {
+            if (document.querySelector('[role="dialog"][aria-modal="true"]')) visible = false
+            if (visible) {
+              const content = document.querySelector('[data-conversation-content]')
+              if (content) {
+                const rect = typeof content.getBoundingClientRect === 'function'
+                  ? content.getBoundingClientRect()
+                  : null
+                visible = rect === null || (rect.width > 0 && rect.height > 0)
+              }
+            }
+          } catch (err) { visible = true }
+          setOnChat((prev) => (prev === visible ? prev : visible))
+        }
+        check()
+        const timer = setInterval(check, 600)
+        if (timer && typeof timer.unref === 'function') timer.unref()
+        return () => clearInterval(timer)
+      }, [])
+
       // Responsive size: the standee must fit the free right margin of the
       // conversation, so a windowed app gets a smaller standee instead of one
       // that covers the messages. Falls back to a viewport-proportional width,
@@ -1080,9 +1108,12 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
 
       return h('div', {
         class: `${PREFIX}-stats`,
-        style: { right: STATS_PIN.right + 'px', bottom: STATS_PIN.bottom + 'px' },
+        style: onChat
+          ? { right: STATS_PIN.right + 'px', bottom: STATS_PIN.bottom + 'px' }
+          : { right: STATS_PIN.right + 'px', bottom: STATS_PIN.bottom + 'px', display: 'none' },
         title: detail,
         'data-popping': popping ? 'true' : 'false',
+        'data-on-chat': onChat ? 'true' : 'false',
       },
         reportVisible || balanceVisible ? h('div', { class: `${PREFIX}-clouds` },
           balanceVisible ? h('div', { key: 'balance', class: `${PREFIX}-cloud`, 'data-kind': 'balance' },
