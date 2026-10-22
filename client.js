@@ -992,7 +992,9 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         const check = () => {
           let visible = true
           try {
-            if (document.querySelector('[role="dialog"][aria-modal="true"]')) visible = false
+            // Any dialog counts: settings, plugins and other secondary pages are
+            // dialogs, and not all of them carry aria-modal.
+            if (document.querySelector('[role="dialog"], [role="alertdialog"]')) visible = false
             if (visible) {
               const content = document.querySelector('[data-conversation-content]')
               if (content) {
@@ -1000,6 +1002,16 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
                   ? content.getBoundingClientRect()
                   : null
                 visible = rect === null || (rect.width > 0 && rect.height > 0)
+                // A full-page settings view can keep the conversation mounted
+                // behind it. Ask the browser what is actually on top at the
+                // chat's own centre; if it is not the conversation, the chat is
+                // covered and the standee has no business floating there.
+                if (visible && rect && typeof document.elementFromPoint === 'function' && typeof window !== 'undefined') {
+                  const x = Math.min(window.innerWidth - 4, Math.max(4, rect.left + rect.width / 2))
+                  const y = Math.min(window.innerHeight - 4, Math.max(4, rect.top + 60))
+                  const hit = document.elementFromPoint(x, y)
+                  if (hit && !content.contains(hit)) visible = false
+                }
               }
             }
           } catch (err) { visible = true }
