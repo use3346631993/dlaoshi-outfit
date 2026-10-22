@@ -1,0 +1,43 @@
+name: 功能请求
+description: 想要新的表情、动作、皮肤或者其它玩法
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        先说清楚「你想用来做什么」，比直接说「加个 X 功能」更容易被实现。
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 使用场景
+      description: 你在什么情况下需要它？
+      placeholder: 我经常一边写代码一边和桌宠互动，希望它能……
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你设想的方案
+      placeholder: 例如：增加「被拖起来时挣扎」的表情
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: 涉及部分
+      options:
+        - 桌宠行为 / 表情
+        - 立牌与统计
+        - 聊天皮肤
+        - 设置项
+        - 文档 / 工具
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认
+      options:
+        - label: 我搜索过已有 issue，没有重复
+          required: true
