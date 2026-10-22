@@ -5,6 +5,10 @@
 
 > 一个插件、一个开关：不想要的时候滑一下，DSH 立刻回到原样。
 
+[![test](https://github.com/use3346631993/dlaoshi-outfit/actions/workflows/ci.yml/badge.svg)](https://github.com/use3346631993/dlaoshi-outfit/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![DeepSeek Harness plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1E4D8F.svg)](https://github.com/use3346631993/dlaoshi-outfit)
+
 ![预览](docs/preview.jpg)
 
 ## 功能
