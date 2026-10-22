@@ -1,0 +1,46 @@
+{
+  "name": "@local/dsh-fatfish-outfit",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "「D老师」desktop pet, bottom-right standee and liquid-glass theme for DeepSeek Harness",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme"
+      ]
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/use3346631993/dlaoshi-outfit.git"
+  },
+  "homepage": "https://github.com/use3346631993/dlaoshi-outfit#readme",
+  "bugs": {
+    "url": "https://github.com/use3346631993/dlaoshi-outfit/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "desktop-pet",
+    "wallpaper",
+    "glassmorphism"
+  ],
+  "scripts": {
+    "check": "node --check client.js && node --check index.js",
+    "test": "node test/verify_pet_outfit.cjs && node test/verify_pet_poke.cjs && node test/verify_pet_states.cjs && node test/verify_turn_stats.cjs"
+  }
+}
