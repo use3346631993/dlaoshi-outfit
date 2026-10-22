@@ -78,6 +78,10 @@ window.__ModuleLoader__.load({
       listener(outfitEnabled)
       return () => { outfitListeners.delete(listener) }
     }
+
+    /** Disposer of the currently mounted occupant set, shared across apply()
+     *  calls so a second mount replaces the first instead of stacking on it. */
+    let mountedOccupants = null
     /** Host route that reports the live turn's tokens and think latency. */
     const STATS_PATH = '/fatfish/stats'
   
@@ -1152,18 +1156,34 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
           window.__petDebug = { starts: 0, ends: 0, happy: 0, sad: 0, balance: null }
         }
 
+        // Reversible, idempotent mount. Every side effect below is paired with a
+        // disposer owned by this plugin's fiber, so the loader can apply this
+        // module again (hot recompose) without a restart and without leaving a
+        // duplicate stylesheet, class or slot occupant behind.
+        if (typeof document.querySelectorAll === 'function') {
+          for (const stale of document.querySelectorAll('style[data-plugin="dlaoshi-outfit"]')) {
+            try { stale.remove() } catch (err) { /* already detached */ }
+          }
+        }
+
         // Apply the remembered outfit state before the stylesheet mounts so the
         // page never flashes the beautified look on a "switched off" session.
         outfitEnabled = readOutfitSetting()
-        applyOutfitClass(outfitEnabled)
+        ctx.effect(() => {
+          applyOutfitClass(outfitEnabled)
+          return () => {
+            try { document.documentElement.classList.remove(SKIN_CLASS) } catch (err) { /* no document */ }
+          }
+        }, 'dlaoshi-pet: skin class')
 
-        const tag = document.createElement('style')
-        tag.dataset.plugin = 'dlaoshi-outfit'
-        tag.textContent = CSS
-        document.head.appendChild(tag)
-        ctx.effect(() => () => {
-          tag.remove()
-          document.documentElement.classList.remove(SKIN_CLASS)
+        ctx.effect(() => {
+          const tag = document.createElement('style')
+          tag.dataset.plugin = 'dlaoshi-outfit'
+          tag.textContent = CSS
+          document.head.appendChild(tag)
+          return () => {
+            try { tag.remove() } catch (err) { /* already detached */ }
+          }
         }, 'dlaoshi-pet: stylesheet')
 
         ctx.effect(() => ctx.theme.overrideTokens('dlaoshi-outfit', TOKENS),
@@ -1172,7 +1192,14 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         const occupy = (name, id, order, component) => ctx.slots.inject(name, () =>
           ctx.slots.register({ name, id, order }, component))
 
-        ctx.effect(() => {
+        // A second mount must replace the first, never stack on top of it: the
+        // loader may re-apply this module while a previous occupant set is still
+        // registered (hot recompose), and two pets would otherwise fight.
+        const mountOccupants = () => {
+          if (typeof mountedOccupants === 'function') {
+            try { mountedOccupants() } catch (err) { /* already gone */ }
+            mountedOccupants = null
+          }
           const stop = [
             occupy('shell.overlay', 'dlaoshi-companion', 20, Companion),
             occupy('sidebar.brand.mark', 'dlaoshi-sidebar', 5, SidebarMark),
@@ -1181,7 +1208,36 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
             occupy('settings.general.item', 'dlaoshi-theme', 40, ThemeSettingsRow),
           ]
           return () => { for (const fn of stop) if (typeof fn === 'function') fn() }
+        }
+
+        mountedOccupants = mountOccupants()
+        ctx.effect(() => () => {
+          if (typeof mountedOccupants === 'function') mountedOccupants()
+          mountedOccupants = null
         }, 'dlaoshi-pet: slot occupants')
+
+        // Self heal for hot recomposition: when the loader evicts this module's
+        // occupants but the overlay slot itself stays mounted, remount instead of
+        // leaving the user with a vanished pet until they refresh.
+        ctx.effect(() => {
+          if (typeof window === 'undefined' || typeof document === 'undefined') return () => {}
+          let misses = 0
+          const timer = setInterval(() => {
+            try {
+              const slot = document.querySelector('[data-slot="shell.overlay"]')
+              if (!slot || typeof slot.querySelector !== 'function') { misses = 0; return }
+              if (slot.querySelector(`.${PREFIX}-pet`)) { misses = 0; return }
+              misses += 1
+              if (misses < 2) return
+              misses = 0
+              mountedOccupants = mountOccupants()
+            } catch (err) {
+              misses = 0
+            }
+          }, 2500)
+          if (timer && typeof timer.unref === 'function') timer.unref()
+          return () => clearInterval(timer)
+        }, 'dlaoshi-pet: hot-recompose self heal')
       },
     }
   },

@@ -137,7 +137,7 @@ const registrations = []
 const injections = []
 const tokenCalls = []
 const effects = []
-mod.apply({
+const ctx = {
   slots: {
     inject(name, factory) { injections.push(name); return factory() },
     register(options, component) {
@@ -150,7 +150,8 @@ mod.apply({
   },
   theme: { overrideTokens(src, tokens) { tokenCalls.push({ src, tokens }); return () => {} } },
   effect(fn, label) { effects.push({ label, dispose: fn() }) },
-})
+}
+mod.apply(ctx)
 
 console.log('injections:', injections.join(' | '))
 for (const r of registrations) {
@@ -224,6 +225,18 @@ const STATS_SNAPSHOT = {
 }
 
 let failures = 0
+
+/* Reversible mount: the loader may apply this module again (hot recompose).
+   That must replace the occupant set, not stack a second pet on top of it. */
+const beforeReapply = registrations.length
+mod.apply(ctx)
+if (registrations.length !== beforeReapply) {
+  failures += 1
+  console.log(`[FAIL] re-apply duplicated slot occupants (${beforeReapply} -> ${registrations.length})`)
+} else {
+  console.log(`[PASS] re-apply replaces slot occupants instead of duplicating (${registrations.length})`)
+}
+
 for (const r of registrations) {
   const contract = expectedById[r.options.id]
   if (contract === undefined) {
