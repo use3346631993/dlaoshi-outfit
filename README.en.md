@@ -19,20 +19,36 @@ composer, and a deep-sea blue theme — all in one zero-dependency DSH plugin.
 
 ## Install
 
+### A. One command (recommended)
+
+```powershell
+dsh plugin add dlaoshi-outfit
+```
+
+Or in DSH: **Settings → Plugins → Add plugin** and enter `dlaoshi-outfit`, then restart DSH.
+
+### B. From GitHub
+
+```
+https://github.com/use3346631993/dlaoshi-outfit.git
+```
+
+### C. Manual (offline)
+
 1. Copy the repository into your DSH profile's `node_modules`:
 
    ```powershell
    git clone https://github.com/<you>/dlaoshi-outfit.git C:\Users\you\Documents\dlaoshi-outfit
-   New-Item -ItemType Directory -Force "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\@local\dsh-fatfish-outfit"
-   Copy-Item "C:\Users\you\Documents\dlaoshi-outfit\*" "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\@local\dsh-fatfish-outfit" -Recurse -Force
+   New-Item -ItemType Directory -Force "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dlaoshi-outfit"
+   Copy-Item "C:\Users\you\Documents\dlaoshi-outfit\*" "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dlaoshi-outfit" -Recurse -Force
    ```
 
 2. Add the plugin to `%USERPROFILE%\.dsh\profiles\desktop\package.json`:
 
    ```json
    {
-     "dsh": { "profile": { "bundles": ["@local/dsh-fatfish-outfit"] } },
-     "dependencies": { "@local/dsh-fatfish-outfit": "file:C:/Users/you/Documents/dlaoshi-outfit" }
+     "dsh": { "profile": { "bundles": ["dlaoshi-outfit"] } },
+     "dependencies": { "dlaoshi-outfit": "file:C:/Users/you/Documents/dlaoshi-outfit" }
    }
    ```
 

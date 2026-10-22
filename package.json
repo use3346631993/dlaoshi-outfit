@@ -1,9 +1,8 @@
 {
-  "name": "@local/dsh-fatfish-outfit",
-  "version": "2.0.1",
-  "private": true,
+  "name": "dlaoshi-outfit",
+  "version": "2.1.0",
   "type": "module",
-  "description": "「D老师」desktop pet, bottom-right standee and liquid-glass theme for DeepSeek Harness",
+  "description": "Anime whale-boy maid-outfit desktop pet, token/think-time standee and liquid-glass theme for DeepSeek Harness",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js"
@@ -22,6 +21,20 @@
       ]
     }
   },
+  "files": [
+    "client.js",
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -34,8 +47,12 @@
   "keywords": [
     "dsh",
     "deepseek-harness",
+    "dsh-plugin",
     "plugin",
     "desktop-pet",
+    "anime",
+    "whale-boy",
+    "maid",
     "wallpaper",
     "glassmorphism"
   ],

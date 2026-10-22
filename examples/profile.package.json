@@ -6,11 +6,11 @@
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "@local/dsh-fatfish-outfit"
+        "dlaoshi-outfit"
       ]
     }
   },
   "dependencies": {
-    "@local/dsh-fatfish-outfit": "file:C:/Users/you/Documents/dlaoshi-outfit"
+    "dlaoshi-outfit": "file:C:/Users/you/Documents/dlaoshi-outfit"
   }
 }

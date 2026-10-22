@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.0 — 2026-10-22
+
+发布到 npm，安装只需一行。
+
+- 包名从 `@local/dsh-fatfish-outfit` 改为 **`dlaoshi-outfit`**（可在 npm 与 DSH 插件市场搜索安装）
+- `cordis.patch.yml` 的插件名同步为 `dlaoshi-outfit`
+- `package.json` 增加 `files` 白名单与 `publishConfig`，npm 包只带运行必需文件
+- README 安装章节改为「一条命令 / GitHub / 手动」三种方式
+- 市场描述关键词调整为：鲸鱼正太、女仆装、二次元
+
+> 从 `@local/...` 升级的用户：先卸载旧条目（`dsh plugin remove @local/dsh-fatfish-outfit`），再装 `dlaoshi-outfit`。
+
 ## 2.0.1 — 2026-10-22
 
 文档与协作设施补全（无功能变更）。
