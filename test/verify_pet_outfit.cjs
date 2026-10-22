@@ -216,6 +216,10 @@ const expectedById = {
     must: ['dlao-settings', 'dlao-switch', 'role="switch"', 'aria-checked', '「D老师」主题'],
     forbid: [],
   },
+  'dlaoshi-persona': {
+    must: ['dlao-persona-row', 'dlao-input', '「D老师」怎么称呼你', 'aria-checked'],
+    forbid: [],
+  },
 }
 
 const STATS_SNAPSHOT = {

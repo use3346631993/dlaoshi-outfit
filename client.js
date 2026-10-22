@@ -251,6 +251,16 @@ html:not(.${SKIN_CLASS}) .${PREFIX}-hero { display: none !important; }
   border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25);
   transition: transform .2s cubic-bezier(.2,.9,.3,1); }
 .${PREFIX}-switch[aria-checked='true'] .${PREFIX}-switch-knob { transform: translateX(20px); }
+/* the addressing row: text field + two switches */
+.${PREFIX}-persona-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  justify-content: flex-end; max-width: 320px; }
+.${PREFIX}-input { flex: 1; min-width: 120px; padding: 6px 10px; border-radius: 8px;
+  border: 1px solid var(--dsw-alias-border-l2, rgba(150,190,255,.3));
+  background: transparent; color: inherit; outline: none;
+  font: 500 13px/1.4 "Segoe UI","Microsoft YaHei",system-ui,sans-serif; }
+.${PREFIX}-input:focus { border-color: #2F55E0; }
+.${PREFIX}-persona-hint { flex: 1 0 100%; text-align: right;
+  font: 400 11px/16px "Segoe UI","Microsoft YaHei",system-ui,sans-serif; opacity: .7; }
 
 /* ============================================================ chat skin == */
 /* The supplied illustration is the chat page's wallpaper. A theme-aware veil
@@ -1104,7 +1114,65 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
     }
 
     /**
-     * The Settings row for the theme switch.
+     * Settings row for the addressing feature: what the model calls the user.
+     *
+     * The Host owns the value (it is written into the prompt as a section), so
+     * this row is a thin client: GET on mount, POST on change.
+     */
+    function PersonaSettingsRow() {
+      const [persona, setPersona] = useState({ enabled: true, address: '主人', tone: true })
+      useEffect(() => {
+        if (typeof fetch !== 'function') return
+        fetch('/fatfish/persona', { cache: 'no-store' })
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => { if (data && data.ok && data.persona) setPersona(data.persona) })
+          .catch(() => { /* the host route may be absent on an old build */ })
+      }, [])
+      const save = (next) => {
+        setPersona(next)
+        if (typeof fetch !== 'function') return
+        fetch('/fatfish/persona', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(next),
+        }).catch(() => { /* keep the local value; the next poll retries */ })
+      }
+      return h('div', { class: `${PREFIX}-settings` },
+        h('div', { class: `${PREFIX}-settings-text` },
+          h('div', { class: `${PREFIX}-settings-title` }, '「D老师」怎么称呼你'),
+          h('div', { class: `${PREFIX}-settings-desc` },
+            '默认称呼「主人」；只增加称呼与语气词，不改变回答方式与内容。')),
+        h('div', { class: `${PREFIX}-persona-row` },
+          h('input', {
+            class: `${PREFIX}-input`,
+            type: 'text',
+            value: persona.address,
+            maxLength: 24,
+            placeholder: '主人',
+            'aria-label': '称呼',
+            onChange: (event) => save({ ...persona, address: event.target.value }),
+          }),
+          h('button', {
+            type: 'button',
+            role: 'switch',
+            'aria-checked': persona.enabled ? 'true' : 'false',
+            class: `${PREFIX}-switch`,
+            title: persona.enabled ? '关闭称呼' : '启用称呼',
+            onClick: () => save({ ...persona, enabled: !persona.enabled }),
+          }, h('span', { class: `${PREFIX}-switch-knob` })),
+          h('button', {
+            type: 'button',
+            role: 'switch',
+            'aria-checked': persona.tone ? 'true' : 'false',
+            class: `${PREFIX}-switch`,
+            title: persona.tone ? '关闭语气词' : '启用语气词',
+            onClick: () => save({ ...persona, tone: !persona.tone }),
+          }, h('span', { class: `${PREFIX}-switch-knob` })),
+          h('div', { class: `${PREFIX}-persona-hint` }, '左边开关=称呼，右边开关=语气词')))
+    }
+
+    /**
+     * The Settings row for the whole outfit switch.
      *
      * Rendered inside DSH's own "General" settings list, so it inherits the
      * page's typography and spacing. The switch drives the whole outfit: the
@@ -1204,8 +1272,9 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
             occupy('shell.overlay', 'dlaoshi-companion', 20, Companion),
             occupy('sidebar.brand.mark', 'dlaoshi-sidebar', 5, SidebarMark),
             occupy('conversation.hero.brand.mark', 'dlaoshi-hero', 5, HeroCharacter),
-            // the switch lives in Settings › General, like DSH's own rows
+            // the switches live in Settings › General, like DSH's own rows
             occupy('settings.general.item', 'dlaoshi-theme', 40, ThemeSettingsRow),
+            occupy('settings.general.item', 'dlaoshi-persona', 41, PersonaSettingsRow),
           ]
           return () => { for (const fn of stop) if (typeof fn === 'function') fn() }
         }

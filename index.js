@@ -22,9 +22,68 @@
 /** The web server is the only service required. */
 export const inject = ['webServer']
 
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+
 const BASE = '/fatfish'
 const MAX_SESSIONS = 16
 const LOOPBACKS = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])
+
+/* ------------------------------------------------------------ persona ----- */
+
+/** Where the "how should it address me" setting lives (survives restarts). */
+const PERSONA_PATH = path.join(os.homedir(), '.dsh', 'fatfish-outfit', 'persona.json')
+const DEFAULT_PERSONA = { enabled: true, address: '主人', tone: true }
+
+function loadPersona() {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(PERSONA_PATH, 'utf8'))
+    return {
+      enabled: parsed.enabled !== false,
+      address: typeof parsed.address === 'string' && parsed.address.trim()
+        ? parsed.address.trim().slice(0, 24)
+        : DEFAULT_PERSONA.address,
+      tone: parsed.tone !== false,
+    }
+  } catch (err) {
+    return { ...DEFAULT_PERSONA }
+  }
+}
+
+function savePersona(persona) {
+  try {
+    fs.mkdirSync(path.dirname(PERSONA_PATH), { recursive: true })
+    fs.writeFileSync(PERSONA_PATH, JSON.stringify(persona, null, 2), 'utf8')
+  } catch (err) { /* best effort: the setting still applies for this run */ }
+}
+
+/**
+ * The prompt section that carries the addressing rule.
+ *
+ * Deliberately narrow: it changes how the model addresses the user and which
+ * light sentence-final particles it may use. It explicitly forbids touching the
+ * answer's content, structure, code, tools or length, so answer habits stay the
+ * same. Returns '' when the feature is switched off, which makes the section
+ * empty and therefore invisible to the model.
+ */
+function personaPrompt(persona) {
+  if (!persona.enabled) return ''
+  const address = persona.address || DEFAULT_PERSONA.address
+  const lines = [
+    '## 称呼与语气（只影响措辞，不影响回答内容）',
+    `- 在称呼用户时使用「${address}」。`,
+  ]
+  if (persona.tone) {
+    lines.push('- 可以在句首或句尾偶尔加一个很轻的语气词（呀 / 呢 / 哦 / 啦），让语气更有陪伴感；不要每句都加。')
+  }
+  lines.push(
+    '- 这条规则只改变称呼和语气词：回答的事实、结论、结构、代码、工具调用、专业程度与长度都保持原样。',
+    '- 不要为了使用称呼而重复用户的话，也不要刻意卖萌或降低信息密度。',
+    '- 如果用户使用其他语言，请使用该语言里对应的称呼（例如英文用 "Master"）。',
+  )
+  return lines.join('\n')
+}
 
 /** One turn's accounting; replaced at every `turn/start`. */
 function blank(sessionId) {
@@ -273,6 +332,56 @@ export function apply(ctx) {
     if (Date.now() - balanceCache.at > BALANCE_TTL_MS) refreshBalance()
     return balanceCache.value
   }
+
+  // ---- addressing: one persona section the model sees on every step ------
+  // The section text is a function, so changing the setting takes effect on the
+  // very next model step without re-registering anything.
+  let persona = loadPersona()
+  ctx.inject(['systemPrompt'], (scope) => {
+    const registry = scope && scope.systemPrompt
+    if (!registry || typeof registry.section !== 'function') return
+    registry.section({
+      name: 'dlaoshi:address',
+      order: 9000,
+      text: () => personaPrompt(persona),
+    })
+  })
+
+  ctx.effect(() => ctx.webServer.register({
+    kind: 'exact',
+    path: `${BASE}/persona`,
+    handler: (req, res) => {
+      if (!isLoopback(req)) {
+        respondJson(res, 403, { ok: false, error: 'loopback only' })
+        return
+      }
+      if (req.method === 'POST') {
+        let body = ''
+        req.on('data', (chunk) => {
+          body += chunk
+          if (body.length > 4096) req.destroy()
+        })
+        req.on('end', () => {
+          try {
+            const parsed = JSON.parse(body || '{}')
+            persona = {
+              enabled: parsed.enabled !== false,
+              address: typeof parsed.address === 'string' && parsed.address.trim()
+                ? parsed.address.trim().slice(0, 24)
+                : DEFAULT_PERSONA.address,
+              tone: parsed.tone !== false,
+            }
+            savePersona(persona)
+            respondJson(res, 200, { ok: true, persona })
+          } catch (err) {
+            respondJson(res, 400, { ok: false, error: 'invalid json' })
+          }
+        })
+        return
+      }
+      respondJson(res, 200, { ok: true, persona })
+    },
+  }), 'fatfish: persona route')
 
   ctx.effect(() => ctx.webServer.register({
     kind: 'exact',

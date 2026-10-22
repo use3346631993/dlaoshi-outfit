@@ -28,6 +28,7 @@ const source = fs.readFileSync(HOST, 'utf8')
 const listeners = new Map()
 const routes = []
 const effects = []
+const promptSections = []
 
 /** Fake account provider: the same outcome shape the platform service returns. */
 const accountCalls = []
@@ -61,6 +62,9 @@ const ctx = {
   /** Lazy dependency: the plugin must load even when the account is absent. */
   inject(deps, callback) {
     if (deps.includes('deepseekAccount') && callback) callback({ deepseekAccount: fakeAccount })
+    if (deps.includes('systemPrompt') && callback) {
+      callback({ systemPrompt: { section(section) { promptSections.push(section); return () => {} } } })
+    }
     return () => {}
   },
   webServer: {
@@ -85,6 +89,22 @@ const T0 = 1_700_000_000_000
 /* ------------------------------------------------------------- the plugin -- */
 
 // The Host module is ESM; evaluate it as an ES module via a data: URL import.
+// A temporary HOME keeps the persona setting (which the Host persists under
+// ~/.dsh/fatfish-outfit) out of the real user profile and makes runs repeatable.
+const os = require('os')
+const tmpHome = fs.mkdtempSync(path.join(os.tmpdir(), 'dsh-outfit-home-'))
+const realUserProfile = process.env.USERPROFILE
+const realHome = process.env.HOME
+process.env.USERPROFILE = tmpHome
+process.env.HOME = tmpHome
+process.on('exit', () => {
+  try { fs.rmSync(tmpHome, { recursive: true, force: true }) } catch (err) { /* best effort */ }
+  if (realUserProfile === undefined) delete process.env.USERPROFILE
+  else process.env.USERPROFILE = realUserProfile
+  if (realHome === undefined) delete process.env.HOME
+  else process.env.HOME = realHome
+})
+
 async function loadHost() {
   const url = 'data:text/javascript;base64,' + Buffer.from(source, 'utf8').toString('base64')
   return import(url)
@@ -137,6 +157,30 @@ async function requestBalance({ remote = '127.0.0.1' } = {}) {
     end(chunk) { body = String(chunk || '') },
   }
   await route.handler({ url: '/fatfish/balance', socket: { remoteAddress: remote } }, res)
+  return { status, body: body ? JSON.parse(body) : null }
+}
+
+/** Invoke the persona route the way the browser would. */
+function requestPersona({ method = 'GET', payload = null, remote = '127.0.0.1' } = {}) {
+  const route = routes.find((r) => r.path === '/fatfish/persona')
+  if (!route) throw new Error('persona route was never registered')
+  let status = 0
+  let body = ''
+  const res = {
+    writeHead(code) { status = code; return this },
+    end(chunk) { body = String(chunk || '') },
+  }
+  const req = {
+    method,
+    url: '/fatfish/persona',
+    socket: { remoteAddress: remote },
+    on(name, handler) {
+      if (name === 'data' && payload !== null) handler(Buffer.from(JSON.stringify(payload)))
+      if (name === 'end') handler()
+    },
+    destroy() {},
+  }
+  route.handler(req, res)
   return { status, body: body ? JSON.parse(body) : null }
 }
 
@@ -282,6 +326,26 @@ async function runStream(mutator) {
 
   // ---- safety: the route is loopback only --------------------------------
   check('non-loopback is refused', 403, requestStats({ remote: '10.0.0.7' }).status)
+
+  // ---- addressing: one prompt section, updated live ----------------------
+  const section = promptSections[0]
+  check('persona prompt section registered', 'dlaoshi:address', section && section.name)
+  const initialText = section ? section.text({}) : ''
+  check('default address is 主人', true, initialText.includes('主人'))
+  check('the rule protects answer habits', true, initialText.includes('不改变') || initialText.includes('保持原样'))
+
+  const saved = requestPersona({ method: 'POST', payload: { enabled: true, address: '老板', tone: false } })
+  check('persona save answers ok', true, saved.body && saved.body.ok === true)
+  check('persona save normalises the address', '老板', saved.body && saved.body.persona.address)
+  const updatedText = section ? section.text({}) : ''
+  check('prompt uses the new address immediately', true, updatedText.includes('老板'))
+  check('tone switch removes the particle rule', false, updatedText.includes('语气词（呀'))
+
+  const readBack = requestPersona()
+  check('persona reads back', '老板', readBack.body && readBack.body.persona.address)
+
+  const disabled = requestPersona({ method: 'POST', payload: { enabled: false, address: '老板', tone: true } })
+  check('disabled persona returns an empty section', '', section ? section.text({}) : 'x')
 
   // ---- dispose releases the route ---------------------------------------
   for (const dispose of effects) if (typeof dispose === 'function') dispose()
