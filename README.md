@@ -8,9 +8,9 @@
 [![test](https://github.com/use3346631993/dlaoshi-outfit/actions/workflows/ci.yml/badge.svg)](https://github.com/use3346631993/dlaoshi-outfit/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![DeepSeek Harness plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1E4D8F.svg)](https://github.com/use3346631993/dlaoshi-outfit)
-[![release](https://img.shields.io/badge/release-v2.0.0-2F55E0.svg)](https://github.com/use3346631993/dlaoshi-outfit/releases/latest)
+[![release](https://img.shields.io/badge/release-v2.0.1-2F55E0.svg)](https://github.com/use3346631993/dlaoshi-outfit/releases/latest)
 
-> **不想看源码？** 直接下载 [v2.0.0 发布包](https://github.com/use3346631993/dlaoshi-outfit/releases/latest)，解压后按下面的三步安装。
+> **不想看源码？** 直接下载 [v2.0.1 发布包](https://github.com/use3346631993/dlaoshi-outfit/releases/latest)，解压后按下面的三步安装。
 
 ![预览](docs/preview.jpg)
 

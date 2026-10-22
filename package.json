@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-fatfish-outfit",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "type": "module",
   "description": "「D老师」desktop pet, bottom-right standee and liquid-glass theme for DeepSeek Harness",

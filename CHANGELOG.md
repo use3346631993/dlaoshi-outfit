@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.1 — 2026-10-22
+
+文档与协作设施补全（无功能变更）。
+
+- 新增 `CONTRIBUTING.md`、`SECURITY.md`
+- 新增 Issue 模板（Bug 报告 / 功能请求）与 PR 模板
+- README 增加 CI / License / 插件 / Release 徽章与发布包入口
+- 首个 GitHub Release 与发布包 `dlaoshi-outfit-opensource.zip`
+
 ## 2.0.0 — 2026-10-22
 
 第一个公开版本。
