@@ -19,7 +19,7 @@
  * unloading or HMR removes the whole outfit with its plugin row.
  */
 window.__ModuleLoader__.load({
-  id: '@local/dsh-fatfish-outfit',
+  id: 'dlaoshi-outfit',
   factory(require) {
     const React = require('react')
     const h = React.createElement
@@ -1158,7 +1158,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         applyOutfitClass(outfitEnabled)
 
         const tag = document.createElement('style')
-        tag.dataset.plugin = '@local/dsh-fatfish-outfit'
+        tag.dataset.plugin = 'dlaoshi-outfit'
         tag.textContent = CSS
         document.head.appendChild(tag)
         ctx.effect(() => () => {
@@ -1166,7 +1166,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
           document.documentElement.classList.remove(SKIN_CLASS)
         }, 'dlaoshi-pet: stylesheet')
 
-        ctx.effect(() => ctx.theme.overrideTokens('@local/dsh-fatfish-outfit', TOKENS),
+        ctx.effect(() => ctx.theme.overrideTokens('dlaoshi-outfit', TOKENS),
           'dlaoshi-pet: deep-sea alias tokens')
 
         const occupy = (name, id, order, component) => ctx.slots.inject(name, () =>

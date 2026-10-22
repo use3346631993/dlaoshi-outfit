@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.3 — 2026-10-22
+
+修复：网页端加载失败（`__ModuleLoader__` 未注册）。
+
+- 客户端 bundle 注册的插件 id 从 `@local/dsh-fatfish-outfit` 改为 `dlaoshi-outfit`，
+  与包名/加载器一致；此前网页端会报「导入失败：client-modules 未注册」。
+- 主题 `overrideTokens` 与样式表标记同步改名。
+
 ## 2.1.1 — 2026-10-22
 
 发布到 npm：`npm i dlaoshi-outfit` / `dsh plugin add dlaoshi-outfit`。
