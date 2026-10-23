@@ -75,5 +75,7 @@ Cordis context drive the real handlers and host logic.
 
 ## License
 
-- Code: MIT — see `LICENSE`
-- Character artwork: provided by the author, **not** covered by MIT — see `NOTICE`
+**Personal, entertainment and study use only. Commercial use is prohibited.**
+
+- Author: 咪咪joy · Douyin 1856306425 · Bilibili 一等分萝卜 (UID 1957101674)
+- Full terms: see `LICENSE`; artwork notes: see `NOTICE`

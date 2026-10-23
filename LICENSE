@@ -1,21 +1,73 @@
-MIT License
+小D桌宠插件 · 使用许可（非商业）
+=================================
 
-Copyright (c) 2026 use3346631993
+Copyright (c) 2026 咪咪joy. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+作者：咪咪joy
+抖音号：1856306425
+哔哩哔哩：一等分萝卜（UID 1957101674）
+项目地址：https://github.com/use3346631993/dsh-xiaod-pet
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+本项目（含源码、角色立绘、聊天壁纸、文档）**仅供个人、娱乐、学习使用，禁止商用**。
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+
+一、允许的用途
+--------------
+
+1. 个人使用：在自己的电脑上安装、运行、修改本插件。
+2. 娱乐与学习：阅读源码、学习插件写法、做非商业的二次创作。
+3. 非商业分享：在不收取任何费用、不附带商业推广的前提下分享给朋友或社区，
+   但必须保留本许可、作者署名与项目链接。
+
+
+二、禁止的用途
+--------------
+
+1. 任何形式的商业使用，包括但不限于：销售、付费下载、订阅制、付费教程、
+   商业产品或服务中集成、企业内部商用、以本插件引流变现。
+2. 移除或篡改作者署名、许可文本、项目链接。
+3. 将本插件或其中素材（角色立绘、壁纸）用于商业宣传、周边、NFT、AI 训练数据集等。
+
+
+三、素材说明
+------------
+
+角色立绘与聊天壁纸由作者提供，随本插件一同授权，**同样仅限非商业用途**。
+素材不适用任何开源许可，不得单独提取再分发给商业用途。
+
+
+四、免责声明
+------------
+
+本插件按“现状”提供，不附带任何明示或暗示的担保。
+因使用本插件造成的任何损失，作者不承担责任。
+
+
+五、商业授权
+------------
+
+如需商业授权，请通过项目仓库的 Issue 联系作者。
+
+
+--------------------------------------------------------------------
+
+English summary
+---------------
+
+Copyright (c) 2026 MimiJoy (咪咪joy).
+Author: 咪咪joy · Douyin 1856306425 · Bilibili 一等分萝卜 (UID 1957101674)
+
+This plugin (source code, character artwork, wallpaper and documentation) is
+provided for **personal, entertainment and study use only**.
+**Commercial use of any kind is prohibited.**
+
+You may install, run, modify and share it non-commercially, provided this
+notice, the author's name and the project link stay intact.
+You may not sell it, put it behind a paywall, bundle it into a commercial
+product or service, or use its artwork commercially.
+
+The character artwork is the author's and is not covered by any open-source
+license.
+
+Provided "as is", without warranty of any kind. The author is not liable for
+any damage arising from its use.

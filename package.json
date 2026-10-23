@@ -1,6 +1,6 @@
 {
   "name": "dsh-xiaod-pet",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "type": "module",
   "description": "小D —— 鲸鱼正太女仆装桌宠、token/思考时间立牌与液态玻璃主题（DeepSeek Harness 插件）",
   "exports": {
@@ -35,7 +35,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/use3346631993/dsh-xiaod-pet.git"
@@ -60,5 +60,6 @@
     "check": "node --check client.js && node --check index.js",
     "test": "node test/verify_pet_outfit.cjs && node test/verify_pet_poke.cjs && node test/verify_pet_states.cjs && node test/verify_turn_stats.cjs"
   },
-  "displayName": "小D"
+  "displayName": "小D",
+  "author": "咪咪joy (Douyin 1856306425 / Bilibili UID 1957101674)"
 }

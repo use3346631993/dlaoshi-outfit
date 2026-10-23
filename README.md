@@ -6,7 +6,7 @@
 > 一个插件、一个开关：不想要的时候滑一下，DSH 立刻回到原样。
 
 [![test](https://github.com/use3346631993/dsh-xiaod-pet/actions/workflows/ci.yml/badge.svg)](https://github.com/use3346631993/dsh-xiaod-pet/actions/workflows/ci.yml)
-[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![license: 仅限非商业](https://img.shields.io/badge/license-%E4%BB%85%E9%99%90%E9%9D%9E%E5%95%86%E4%B8%9A-red.svg)](LICENSE)
 [![npm](https://img.shields.io/npm/v/dsh-xiaod-pet.svg)](https://www.npmjs.com/package/dsh-xiaod-pet)
 [![DeepSeek Harness plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1E4D8F.svg)](https://github.com/use3346631993/dsh-xiaod-pet)
 [![release](https://img.shields.io/badge/release-v2.1.0-2F55E0.svg)](https://github.com/use3346631993/dsh-xiaod-pet/releases/latest)
@@ -205,10 +205,19 @@ python tools/inline_sprites.py
 
 ## 许可
 
-- **代码**：MIT，见 [`LICENSE`](LICENSE)
-- **角色立绘**：由作者提供，**不包含在 MIT 授权内**，见 [`NOTICE`](NOTICE)
+**仅供个人、娱乐、学习使用，禁止商用。**
 
-如果你要再分发角色形象，请先确认原画授权。
+- ✅ 可以：自己安装使用、阅读源码学习、非商业分享（保留作者署名与项目链接）
+- ❌ 不可以：销售、付费下载、订阅制、商业产品集成、拿角色素材商用
+
+完整条款见 [`LICENSE`](LICENSE)；素材与第三方说明见 [`NOTICE`](NOTICE)。
+
+## 作者
+
+- 咪咪joy
+- 抖音：1856306425
+- 哔哩哔哩：一等分萝卜（UID 1957101674）
+- 项目：https://github.com/use3346631993/dsh-xiaod-pet
 
 ## 致谢
 
