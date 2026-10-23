@@ -1,10 +1,10 @@
-# dsh-xiaod-pet — a desktop pet & glass theme for DeepSeek Harness
+# XiaoD (dsh-xiaod-pet) — a desktop pet & glass theme for DeepSeek Harness
 
-A draggable anime desktop pet (a maid-outfit character), a bottom-right standee that
+XiaoD is a draggable anime desktop pet (a maid-outfit whale-boy), a bottom-right standee that
 reports each turn's token usage and thinking time, a chat wallpaper, a liquid-glass
 composer, and a deep-sea blue theme — all in one zero-dependency DSH plugin.
 
-![preview](docs/preview.png)
+![preview](docs/preview.jpg)
 
 ## Features
 
