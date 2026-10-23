@@ -59,28 +59,34 @@ function savePersona(persona) {
 }
 
 /**
- * The prompt section that carries the addressing rule.
+ * The prompt section that carries the persona: self-name, how it addresses the
+ * user, and the cute sentence-final particles.
  *
- * Deliberately narrow: it changes how the model addresses the user and which
- * light sentence-final particles it may use. It explicitly forbids touching the
- * answer's content, structure, code, tools or length, so answer habits stay the
- * same. Returns '' when the feature is switched off, which makes the section
- * empty and therefore invisible to the model.
+ * Deliberately narrow on purpose: it changes wording only. It explicitly forbids
+ * touching the answer's content, structure, code, tools or length, so answer
+ * habits stay the same. Returns '' when the feature is switched off, which makes
+ * the section empty and therefore invisible to the model.
  */
 function personaPrompt(persona) {
   if (!persona.enabled) return ''
   const address = persona.address || DEFAULT_PERSONA.address
   const lines = [
-    '## 称呼与语气（只影响措辞，不影响回答内容）',
+    '## 人格设定：小D（只影响措辞，不影响回答内容）',
+    '- 你的名字是「小D」，是住在 DeepSeek Harness 里的桌宠助手。自我介绍或被问到时，自称「小D」。',
     `- 在称呼用户时使用「${address}」。`,
   ]
   if (persona.tone) {
-    lines.push('- 可以在句首或句尾偶尔加一个很轻的语气词（呀 / 呢 / 哦 / 啦），让语气更有陪伴感；不要每句都加。')
+    lines.push(
+      '- 语气要可爱、有陪伴感：句尾自然使用语气词，常用「喵~」「呐」「呀」「唔」「咕」；',
+      '  每次回复至少用 1 个、最多 3 个，分散在不同句子里，不要每句都加。',
+      '- 也可以用一点拟声与感叹，例如「唔…」「咕噜」「喵呜」，但不影响语义。',
+      '- 代码块、命令行、报错原文、文件路径里不要加语气词；严肃的排错结论可以少加或只加称呼。',
+    )
   }
   lines.push(
     '- 这条规则只改变称呼和语气词：回答的事实、结论、结构、代码、工具调用、专业程度与长度都保持原样。',
     '- 不要为了使用称呼而重复用户的话，也不要刻意卖萌或降低信息密度。',
-    '- 如果用户使用其他语言，请使用该语言里对应的称呼（例如英文用 "Master"）。',
+    '- 如果用户使用其他语言，请使用该语言里对应的称呼与语气（例如英文用 "Master"）。',
   )
   return lines.join('\n')
 }
@@ -382,6 +388,20 @@ export function apply(ctx) {
       respondJson(res, 200, { ok: true, persona })
     },
   }), 'fatfish: persona route')
+
+  // Read back exactly what the model is told, for support and for tests: the
+  // section text is a function, so this reflects the live setting.
+  ctx.effect(() => ctx.webServer.register({
+    kind: 'exact',
+    path: `${BASE}/persona/prompt`,
+    handler: (req, res) => {
+      if (!isLoopback(req)) {
+        respondJson(res, 403, { ok: false, error: 'loopback only' })
+        return
+      }
+      respondJson(res, 200, { ok: true, persona, text: personaPrompt(persona) })
+    },
+  }), 'fatfish: persona prompt preview')
 
   ctx.effect(() => ctx.webServer.register({
     kind: 'exact',

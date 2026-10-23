@@ -332,14 +332,17 @@ async function runStream(mutator) {
   check('persona prompt section registered', 'dlaoshi:address', section && section.name)
   const initialText = section ? section.text({}) : ''
   check('default address is 主人', true, initialText.includes('主人'))
-  check('the rule protects answer habits', true, initialText.includes('不改变') || initialText.includes('保持原样'))
+  check('the persona introduces itself as 小D', true, initialText.includes('小D'))
+  check('cute particles are listed', true,
+    initialText.includes('喵') && initialText.includes('呐') && initialText.includes('咕'))
+  check('the rule protects answer habits', true, initialText.includes('保持原样'))
 
   const saved = requestPersona({ method: 'POST', payload: { enabled: true, address: '老板', tone: false } })
   check('persona save answers ok', true, saved.body && saved.body.ok === true)
   check('persona save normalises the address', '老板', saved.body && saved.body.persona.address)
   const updatedText = section ? section.text({}) : ''
   check('prompt uses the new address immediately', true, updatedText.includes('老板'))
-  check('tone switch removes the particle rule', false, updatedText.includes('语气词（呀'))
+  check('tone switch removes the particle rule', false, updatedText.includes('喵~'))
 
   const readBack = requestPersona()
   check('persona reads back', '老板', readBack.body && readBack.body.persona.address)

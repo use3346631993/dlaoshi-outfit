@@ -1205,9 +1205,9 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
       }
       return h('div', { class: `${PREFIX}-settings` },
         h('div', { class: `${PREFIX}-settings-text` },
-          h('div', { class: `${PREFIX}-settings-title` }, '「D老师」怎么称呼你'),
+          h('div', { class: `${PREFIX}-settings-title` }, '「小D」怎么称呼你'),
           h('div', { class: `${PREFIX}-settings-desc` },
-            '默认称呼「主人」；只增加称呼与语气词，不改变回答方式与内容。')),
+            '自称小D，默认称呼你「主人」；语气词如喵~ / 呐 / 呀 / 唔 / 咕，只改措辞不改回答内容。')),
         h('div', { class: `${PREFIX}-persona-row` },
           h('input', {
             class: `${PREFIX}-input`,
