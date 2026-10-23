@@ -268,11 +268,11 @@ for (const r of registrations) {
     const reportOk = reportHtml.includes('dlao-stats-bubble')
       && reportHtml.includes('dlao-cloud')
       && reportHtml.includes('dlao-cloud-tail-a') && reportHtml.includes('dlao-cloud-tail-b')
-      && reportHtml.includes('本次消耗 token 为')
-      && reportHtml.includes('思考时间为')
+      && reportHtml.includes('这轮用掉')
+      && reportHtml.includes('小D想了')
       && reportHtml.includes('59.1k')     // total tokens formatted
       && reportHtml.includes('3.2s')      // think time formatted
-      && !reportHtml.includes('剩余余额为')  // balance lives in its own bubble
+      && !reportHtml.includes('余额还有')  // balance lives in its own bubble
       && !reportHtml.includes('\u23f1') && !reportHtml.includes('\u26a1')
     if (!reportOk) { failures += 1; console.log('[FAIL] corner standee does not render the report bubble alone') }
     else console.log('[PASS] report bubble carries only token + think time')
@@ -284,7 +284,7 @@ for (const r of registrations) {
     }))
     const balanceOk = balanceHtml.includes('dlao-clouds')
       && balanceHtml.includes("data-kind=\"balance\"")
-      && balanceHtml.includes('剩余余额为')
+      && balanceHtml.includes('余额还有')
       && balanceHtml.includes('￥12.34')          // two decimals only
       && (balanceHtml.match(/dlao-stats-bubble/g) || []).length === 2
     if (!balanceOk) { failures += 1; console.log('[FAIL] balance does not render as its own bubble') }
@@ -357,13 +357,13 @@ else {
       ${balance ? `
       <div class="dlao-cloud" data-kind="balance">
         <div class="dlao-stats-bubble">
-          <span class="dlao-stats-line">剩余余额为 <b>${balance}</b></span>
+          <span class="dlao-stats-line">主人，余额还有 <b>${balance}</b> 喵~</span>
         </div>
       </div>` : ''}
       <div class="dlao-cloud" data-kind="report">
         <div class="dlao-stats-bubble">
-          <span class="dlao-stats-line">本次消耗 token 为 <b>${tokens}</b></span>
-          <span class="dlao-stats-line">思考时间为 <b>${time}</b></span>
+          <span class="dlao-stats-line">主人，这轮用掉 <b>${tokens}</b> token 呐~</span>
+          <span class="dlao-stats-line">小D想了 <b>${time}</b> 哦</span>
         </div>
         <span class="dlao-cloud-tail-a"></span>
         <span class="dlao-cloud-tail-b"></span>

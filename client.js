@@ -1129,10 +1129,10 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
       const balanceText = money === null ? (balanceFailed ? '--' : '读取中…') : money
 
       const detail = [
-        report ? '本轮 turn ' + report.turn : '还没有本轮数据',
-        report ? '本次消耗 token ' + report.tokens : null,
-        report ? '思考时间 ' + fmtDuration(report.thinkMs) : null,
-        money === null ? '剩余余额 未读取' : '剩余余额 ' + money,
+        report ? '第 ' + report.turn + ' 轮喵~' : '还没有本轮数据呐',
+        report ? '用掉 ' + report.tokens + ' token' : null,
+        report ? '小D想了 ' + fmtDuration(report.thinkMs) : null,
+        money === null ? '余额未读取唔' : '余额 ' + money + ' 喵' ,
       ].filter(Boolean).join(' · ')
 
       // Two independent thought bubbles: the turn report (automatic) and the
@@ -1157,14 +1157,14 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
           balanceVisible ? h('div', { key: 'balance', class: `${PREFIX}-cloud`, 'data-kind': 'balance' },
             h('div', { class: `${PREFIX}-stats-bubble` },
               h('span', { class: `${PREFIX}-stats-line` },
-                '剩余余额为 ', h('b', null, balanceText))),
+                '主人，余额还有 ', h('b', null, balanceText), ' 喵~')),
             reportVisible ? null : tailMarks()) : null,
           reportVisible ? h('div', { key: 'report', class: `${PREFIX}-cloud`, 'data-kind': 'report' },
             h('div', { class: `${PREFIX}-stats-bubble` },
               h('span', { class: `${PREFIX}-stats-line` },
-                '本次消耗 token 为 ', h('b', null, fmtTokens(tokens))),
+                '主人，这轮用掉 ', h('b', null, fmtTokens(tokens)), ' token 呐~'),
               h('span', { class: `${PREFIX}-stats-line` },
-                '思考时间为 ', h('b', null, fmtDuration(think)))),
+                '小D想了 ', h('b', null, fmtDuration(think)), ' 哦')),
             tailMarks()) : null) : null,
         h('img', {
           class: `${PREFIX}-stats-img`,

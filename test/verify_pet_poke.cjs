@@ -325,9 +325,9 @@ check('click opens the balance bubble', true,
   !!find(tree, (n) => n.props.class === 'dlao-stats-bubble'))
 check('the balance bubble is its own cloud', 'balance',
   (find(tree, (n) => n.props.class === 'dlao-cloud') || { props: {} }).props['data-kind'])
-check('the balance bubble says 剩余余额为 only', true,
-  JSON.stringify(tree).includes('剩余余额为')
-  && !JSON.stringify(tree).includes('本次消耗 token 为'))
+check('the balance bubble says 余额还有 only', true,
+  JSON.stringify(tree).includes('余额还有')
+  && !JSON.stringify(tree).includes('这轮用掉'))
 
 // Rapid clicks must restart the spring every time: the animation NAME alternates
 // between two identical keyframe sets, which is what makes the browser restart
