@@ -1,6 +1,6 @@
 {
   "name": "dsh-xiaod-pet",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "type": "module",
   "description": "小D —— 鲸鱼正太女仆装桌宠、token/思考时间立牌与液态玻璃主题（DeepSeek Harness 插件）",
   "exports": {
@@ -54,7 +54,10 @@
     "whale-boy",
     "maid",
     "wallpaper",
-    "glassmorphism"
+    "glassmorphism",
+    "xiaod",
+    "dsh-xiaod-pet",
+    "xiaod-pet"
   ],
   "scripts": {
     "check": "node --check client.js && node --check index.js",

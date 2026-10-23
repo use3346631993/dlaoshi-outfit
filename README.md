@@ -1,8 +1,10 @@
-# 「D老师」桌宠 · DeepSeek Harness 主题插件
+# 小D桌宠 · `dsh-xiaod-pet` · DeepSeek Harness 插件
 
 一只可以**拖到任意位置**的桌宠：**二次元的鲸鱼正太**，穿着**女仆装**，外加右下角**立牌**、
 聊天区**背景壁纸**、**液态玻璃**输入框与一组深海蓝配色。全部功能打包成一个零依赖的 DSH 插件。
 
+> 搜索 **`dsh-xiaod-pet`** 或 **`dsh xiaod pet`** 都能找到本插件。
+>
 > 一个插件、一个开关：不想要的时候滑一下，DSH 立刻回到原样。
 
 [![test](https://github.com/use3346631993/dsh-xiaod-pet/actions/workflows/ci.yml/badge.svg)](https://github.com/use3346631993/dsh-xiaod-pet/actions/workflows/ci.yml)
@@ -94,7 +96,7 @@ Copy-Item "C:\Users\你\Documents\dsh-xiaod-pet\*" `
 - **拖动**：按住桌宠拖到任意位置，松手即停留，下次启动还在原地
 - **点击桌宠**：依次切换 开心 → 思考 → 失望 → 默认，几秒无操作自动回默认
 - **点击右下角立牌**：q 弹一下、响一声气泡膜"啵"、弹出余额气泡
-- **主题开关**：设置 › 通用 › 「D老师」主题
+- **主题开关**：设置 › 通用 › 「小D」主题
 
   ![设置里的主题开关](docs/settings.png)
 
@@ -103,7 +105,7 @@ Copy-Item "C:\Users\你\Documents\dsh-xiaod-pet\*" `
 
 ## 称呼与语气
 
-设置 › 通用 › **「D老师」怎么称呼你**：
+设置 › 通用 › **「小D」怎么称呼你**：
 
 - 输入框里填称呼，默认 **主人**
 - 左侧开关 = 启用 / 关闭称呼

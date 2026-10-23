@@ -1,4 +1,4 @@
-# Dlaoshi Outfit — a desktop pet & glass theme for DeepSeek Harness
+# dsh-xiaod-pet — a desktop pet & glass theme for DeepSeek Harness
 
 A draggable anime desktop pet (a maid-outfit character), a bottom-right standee that
 reports each turn's token usage and thinking time, a chat wallpaper, a liquid-glass
@@ -61,7 +61,7 @@ https://github.com/use3346631993/dsh-xiaod-pet.git
 - Drag the pet anywhere; the position persists.
 - Click the pet to cycle expressions; it returns to its calm face on its own.
 - Click the corner standee: squish, pop, balance bubble.
-- Toggle the whole outfit in **Settings › General › “D老师” Theme**.
+- Toggle the whole outfit in **Settings › General › “小D” Theme**.
 
 ## Development
 

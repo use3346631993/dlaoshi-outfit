@@ -1,5 +1,5 @@
 /**
- * 「D老师」 companion outfit for the DeepSeek Harness Web GUI.
+ * 「小D」(dsh-xiaod-pet) companion outfit for the DeepSeek Harness Web GUI.
  *
  * The artwork is the illustration the user supplied; `make_pet_sprite.py` removed
  * its plain background, bled the character's own colours into the transparent
@@ -1253,14 +1253,14 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
       const toggle = () => setOutfitEnabled(!on)
       return h('div', { class: `${PREFIX}-settings` },
         h('div', { class: `${PREFIX}-settings-text` },
-          h('div', { class: `${PREFIX}-settings-title` }, '「D老师」主题'),
+          h('div', { class: `${PREFIX}-settings-title` }, '「小D」主题'),
           h('div', { class: `${PREFIX}-settings-desc` },
             '开启后显示聊天背景壁纸、液态玻璃输入框、桌面桌宠与右下角立牌；关闭则全部隐藏，恢复 DSH 原始界面。')),
         h('button', {
           type: 'button',
           role: 'switch',
           'aria-checked': on ? 'true' : 'false',
-          'aria-label': '「D老师」主题开关',
+          'aria-label': '「小D」主题开关',
           class: `${PREFIX}-switch`,
           onClick: toggle,
         }, h('span', { class: `${PREFIX}-switch-knob` })))

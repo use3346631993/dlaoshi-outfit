@@ -1,5 +1,5 @@
 /**
- * Host half of the 「D老师」 outfit.
+ * Host half of the 「小D」 (dsh-xiaod-pet) outfit.
  *
  * The presentation lives in the Client half; this seat exists to answer one
  * question for the composer standee: how much did THIS turn consume (tokens)

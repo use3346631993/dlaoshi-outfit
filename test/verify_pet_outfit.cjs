@@ -213,7 +213,7 @@ const expectedById = {
     forbid: [],
   },
   'dlaoshi-theme': {
-    must: ['dlao-settings', 'dlao-switch', 'role="switch"', 'aria-checked', '「D老师」主题'],
+    must: ['dlao-settings', 'dlao-switch', 'role="switch"', 'aria-checked', '「小D」主题'],
     forbid: [],
   },
   'dlaoshi-persona': {
@@ -391,10 +391,10 @@ else {
       <div class="settings-demo">
         <div class="dlao-settings">
           <div class="dlao-settings-text">
-            <div class="dlao-settings-title">「D老师」主题</div>
+            <div class="dlao-settings-title">「小D」主题</div>
             <div class="dlao-settings-desc">开启后显示聊天背景壁纸、液态玻璃输入框、桌面桌宠与右下角立牌；关闭则全部隐藏，恢复 DSH 原始界面。</div>
           </div>
-          <button class="dlao-switch" type="button" role="switch" aria-checked="true" aria-label="「D老师」主题开关">
+          <button class="dlao-switch" type="button" role="switch" aria-checked="true" aria-label="「小D」主题开关">
             <span class="dlao-switch-knob"></span>
           </button>
         </div>
