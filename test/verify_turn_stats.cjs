@@ -348,7 +348,10 @@ async function runStream(mutator) {
   check('persona reads back', '老板', readBack.body && readBack.body.persona.address)
 
   const disabled = requestPersona({ method: 'POST', payload: { enabled: false, address: '老板', tone: true } })
-  check('disabled persona returns an empty section', '', section ? section.text({}) : 'x')
+  const offText = section ? section.text({}) : 'x'
+  check('disabled persona forbids the style explicitly', true,
+    offText.includes('\u4e0d\u8981\u4f7f\u7528\u4efb\u4f55\u79f0\u547c'))
+  check('disabled persona still ships a section (so history cannot win)', true, offText.length > 0)
 
   // ---- dispose releases the route ---------------------------------------
   for (const dispose of effects) if (typeof dispose === 'function') dispose()

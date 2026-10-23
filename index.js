@@ -64,11 +64,21 @@ function savePersona(persona) {
  *
  * Deliberately narrow on purpose: it changes wording only. It explicitly forbids
  * touching the answer's content, structure, code, tools or length, so answer
- * habits stay the same. Returns '' when the feature is switched off, which makes
- * the section empty and therefore invisible to the model.
+ * habits stay the same.
+ *
+ * Switching the feature OFF does not silence the section: an empty section
+ * leaves the model free to imitate the persona style already present in the
+ * conversation history, which is exactly what users saw when they turned it off
+ * mid-session. The off state therefore carries an explicit prohibition.
  */
 function personaPrompt(persona) {
-  if (!persona.enabled) return ''
+  if (!persona.enabled) {
+    return [
+      '## 称呼与语气（已关闭）',
+      '- 不要使用任何称呼词（例如「主人」「老板」等），也不要使用语气词（例如「喵」「呐」「呀」「唔」「咕」）。',
+      '- 使用中性、专业、平实的表达；不要模仿本对话此前出现过的称呼或语气词。',
+    ].join('\n')
+  }
   const address = persona.address || DEFAULT_PERSONA.address
   const lines = [
     '## 人格设定：小D（只影响措辞，不影响回答内容）',
@@ -81,6 +91,10 @@ function personaPrompt(persona) {
       '  每次回复至少用 1 个、最多 3 个，分散在不同句子里，不要每句都加。',
       '- 也可以用一点拟声与感叹，例如「唔…」「咕噜」「喵呜」，但不影响语义。',
       '- 代码块、命令行、报错原文、文件路径里不要加语气词；严肃的排错结论可以少加或只加称呼。',
+    )
+  } else {
+    lines.push(
+      '- 语气词开关已关闭：不要使用「喵」「呐」「呀」「唔」「咕」这类语气词，也不要模仿对话历史里的语气词。',
     )
   }
   lines.push(
