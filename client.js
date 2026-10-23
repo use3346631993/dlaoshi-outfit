@@ -527,20 +527,23 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
     /* ========================================================= occupants == */
 
     /* Dialogue, keyed by the expression on screen. Each state cycles its lines
-       so a long session does not repeat one sentence forever. */
+       so a long session does not repeat one sentence forever.
+       The voice matches the 小D persona: it addresses the user as 主人 and uses
+       the same cute sentence-final particles the system prompt asks for
+       (喵~ / 呐 / 呀 / 唔 / 咕), kept short so the bubble stays narrow. */
     const LINES = {
-      idle: ['我是 D老师，随时待命 ⚡', '需要我做什么？', '代码写累了就歇会儿', '我在这儿等着呢'],
-      thinking: ['正在处理…', '让我想想 🤔', '这个问题有点意思', '别急，我在推理'],
-      happy: ['这轮搞定了！', '搞定 ✅ 还有什么？', '顺利收工', '呼——干得漂亮'],
-      sad: ['这轮没跑通…', '出了点状况，我再看看', '唔，失败了', '要不我们换个思路？'],
-      poke: ['别戳啦', '痒', '我在呢', '有事说事 😌'],
-      pokedThinking: ['稍等，我忙着呢', '正在想，别打岔', '嗯…马上好'],
-      dropped: ['就待这儿', '放这儿挺好', '好，就这儿'],
+      idle: ['主人，小D随时待命喵~', '要做点什么呀？', '写累了就歇会儿呐', '小D在这儿等你哦'],
+      thinking: ['正在想呐…', '让小D想想唔…', '这问题有点意思呀', '别急喵，马上好'],
+      happy: ['搞定啦喵~', '这轮跑通了呀！', '顺利收工呐', '呼——干得漂亮喵'],
+      sad: ['这轮没跑通唔…', '出了点状况，小D再看看', '唔，失败了', '换个思路试试呐？'],
+      poke: ['别戳啦喵~', '好痒呀', '小D在呢', '有事说事哦主人'],
+      pokedThinking: ['稍等呐，小D忙着呢', '正在想，别打岔喵', '唔…马上好'],
+      dropped: ['就待这儿喵', '放这儿挺好呀', '好，就这儿呐'],
       // click-cycle lines, one bucket per expression the poke walks through
-      pokeHappy: ['嘿嘿～', '今天心情不错', '这个表情可爱吧', '笑一个给你看'],
-      pokeThink: ['唔…让我想想', '思考中，别急', '这问题有点意思'],
-      pokeSad: ['我不开心了…', '唔，今天有点累', '别逗我了'],
-      pokeBack: ['好啦，恢复平静', '嗯，就这样吧', '回到待命状态'],
+      pokeHappy: ['嘿嘿～喵', '今天心情不错呀', '这个表情可爱吧喵~', '笑一个给你看呐'],
+      pokeThink: ['唔…让小D想想', '思考中，别急喵', '这问题有点意思呀'],
+      pokeSad: ['小D不开心了唔…', '唔，今天有点累', '别逗我啦喵'],
+      pokeBack: ['好啦，恢复平静喵', '嗯，就这样吧呐', '回到待命状态呀'],
     }
 
     /**

@@ -217,7 +217,7 @@ const expectedById = {
     forbid: [],
   },
   'dlaoshi-persona': {
-    must: ['dlao-persona-row', 'dlao-input', '「D老师」怎么称呼你', 'aria-checked'],
+    must: ['dlao-persona-row', 'dlao-input', '「小D」怎么称呼你', 'aria-checked'],
     forbid: [],
   },
 }
