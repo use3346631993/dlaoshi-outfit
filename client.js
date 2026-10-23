@@ -992,35 +992,45 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         const check = () => {
           let visible = true
           try {
-            // Page identity comes from what the main pane currently renders:
-            //   settings.* slots  -> Settings (the standee stays, by request)
-            //   no chat pane      -> plugins / automation / any other page
-            //   chat pane present -> visible and not covered by an overlay
+            // Page identity:
+            //   settings.* slots   -> Settings (the standee stays, by request)
+            //   no chat composer   -> plugins / automation / any other page
+            //   chat composer here -> chat page (visible and not covered)
+            //
+            // The composer is the reliable chat-only marker: the conversation
+            // body wrapper stays mounted on other pages, so it cannot be used.
             const inSettings = !!document.querySelector('[data-slot^="settings."]')
             if (inSettings) {
               visible = true
             } else {
-              const content = document.querySelector('[data-conversation-content]')
-              if (!content) {
-                // The chat pane is unmounted: this is another page.
+              const composer = document.querySelector('[data-composer-card]')
+                || document.querySelector('[data-slot="conversation.composer"]')
+              if (!composer) {
+                // No composer means this is not a conversation page.
                 visible = false
               } else {
-                const rect = typeof content.getBoundingClientRect === 'function'
-                  ? content.getBoundingClientRect()
+                const rect = typeof composer.getBoundingClientRect === 'function'
+                  ? composer.getBoundingClientRect()
                   : null
                 visible = rect === null || (rect.width > 0 && rect.height > 0)
-                if (visible && rect && typeof document.elementFromPoint === 'function' && typeof window !== 'undefined') {
-                  const x = Math.min(window.innerWidth - 4, Math.max(4, rect.left + rect.width / 2))
-                  const y = Math.min(window.innerHeight - 4, Math.max(4, rect.top + 60))
-                  const hit = document.elementFromPoint(x, y)
-                  if (hit && !content.contains(hit)) visible = false
-                }
               }
             }
           } catch (err) { visible = true }
           setOnChat((prev) => (prev === visible ? prev : visible))
         }
         check()
+        // A one-line diagnostic for support: run
+        //   copy(JSON.stringify(window.__dlaoDiag()))
+        // in DevTools on any page to see which markers the detector sees.
+        if (typeof window !== 'undefined') {
+          window.__dlaoDiag = () => ({
+            composer: !!document.querySelector('[data-composer-card]'),
+            composerSlot: !!document.querySelector('[data-slot="conversation.composer"]'),
+            settings: !!document.querySelector('[data-slot^="settings."]'),
+            conversationContent: !!document.querySelector('[data-conversation-content]'),
+            onChat: document.querySelector('.dlao-stats') ? document.querySelector('.dlao-stats').getAttribute('data-on-chat') : null,
+          })
+        }
         // 400 ms keeps the reaction to a sidebar page switch effectively instant
         // while staying far cheaper than a per-frame check.
         const timer = setInterval(check, 400)
