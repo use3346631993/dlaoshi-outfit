@@ -62,30 +62,41 @@ function savePersona(persona) {
  * The prompt section that carries the persona: self-name, how it addresses the
  * user, and the cute sentence-final particles.
  *
- * Deliberately narrow on purpose: it changes wording only. It explicitly forbids
- * touching the answer's content, structure, code, tools or length, so answer
- * habits stay the same.
+ * The two switches are independent:
+ *   enabled -> how the assistant addresses the user
+ *   tone    -> whether it uses the cute sentence-final particles
+ * Both off is the fully neutral state.
  *
- * Switching the feature OFF does not silence the section: an empty section
- * leaves the model free to imitate the persona style already present in the
- * conversation history, which is exactly what users saw when they turned it off
- * mid-session. The off state therefore carries an explicit prohibition.
+ * The off branches never return an empty section: an empty section leaves the
+ * model free to imitate the style already present in the conversation history,
+ * which is exactly what users saw when they switched it off mid-session. Each
+ * disabled half therefore carries an explicit prohibition instead.
  */
 function personaPrompt(persona) {
-  if (!persona.enabled) {
+  const address = persona.address || DEFAULT_PERSONA.address
+  const addressOn = !!persona.enabled
+  const toneOn = !!persona.tone
+
+  if (!addressOn && !toneOn) {
     return [
       '## 称呼与语气（已关闭）',
       '- 不要使用任何称呼词（例如「主人」「老板」等），也不要使用语气词（例如「喵」「呐」「呀」「唔」「咕」）。',
       '- 使用中性、专业、平实的表达；不要模仿本对话此前出现过的称呼或语气词。',
     ].join('\n')
   }
-  const address = persona.address || DEFAULT_PERSONA.address
+
   const lines = [
     '## 人格设定：小D（只影响措辞，不影响回答内容）',
     '- 你的名字是「小D」，是住在 DeepSeek Harness 里的桌宠助手。自我介绍或被问到时，自称「小D」。',
-    `- 在称呼用户时使用「${address}」。`,
   ]
-  if (persona.tone) {
+  if (addressOn) {
+    lines.push(`- 在称呼用户时使用「${address}」。`)
+  } else {
+    lines.push(
+      '- 称呼开关已关闭：不要使用任何称呼词（例如「主人」「老板」），也不要模仿对话历史里的称呼。',
+    )
+  }
+  if (toneOn) {
     lines.push(
       '- 语气要可爱、有陪伴感：句尾自然使用语气词，常用「喵~」「呐」「呀」「唔」「咕」；',
       '  每次回复至少用 1 个、最多 3 个，分散在不同句子里，不要每句都加。',

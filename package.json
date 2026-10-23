@@ -1,6 +1,6 @@
 {
   "name": "dsh-xiaod-pet",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "type": "module",
   "description": "小D —— 鲸鱼正太女仆装桌宠、token/思考时间立牌与液态玻璃主题（DeepSeek Harness 插件）",
   "exports": {

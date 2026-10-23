@@ -344,8 +344,16 @@ async function runStream(mutator) {
   check('prompt uses the new address immediately', true, updatedText.includes('老板'))
   check('tone switch removes the particle rule', false, updatedText.includes('喵~'))
 
+  // both switches are independent: tone alone must still produce particles
+  requestPersona({ method: 'POST', payload: { enabled: false, address: '主人', tone: true } })
+  const toneOnlyText = section ? section.text({}) : ''
+  check('tone works while address is off', true,
+    toneOnlyText.includes('喵~') && toneOnlyText.includes('称呼开关已关闭'))
+  check('address off does not forbid particles', false,
+    toneOnlyText.includes('也不要使用语气词'))
+
   const readBack = requestPersona()
-  check('persona reads back', '老板', readBack.body && readBack.body.persona.address)
+  check('persona reads back', '主人', readBack.body && readBack.body.persona.address)
 
   const disabled = requestPersona({ method: 'POST', payload: { enabled: false, address: '老板', tone: true } })
   const offText = section ? section.text({}) : 'x'

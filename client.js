@@ -1210,7 +1210,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         h('div', { class: `${PREFIX}-settings-text` },
           h('div', { class: `${PREFIX}-settings-title` }, '「小D」怎么称呼你'),
           h('div', { class: `${PREFIX}-settings-desc` },
-            '自称小D，默认称呼你「主人」；语气词如喵~ / 呐 / 呀 / 唔 / 咕，只改措辞不改回答内容。')),
+            '两个开关独立：左边=称呼，右边=语气词。只开语气词也会生效；不改变回答内容与长度。')),
         h('div', { class: `${PREFIX}-persona-row` },
           h('input', {
             class: `${PREFIX}-input`,
@@ -1237,7 +1237,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
             title: persona.tone ? '关闭语气词' : '启用语气词',
             onClick: () => save({ ...persona, tone: !persona.tone }),
           }, h('span', { class: `${PREFIX}-switch-knob` })),
-          h('div', { class: `${PREFIX}-persona-hint` }, '左边开关=称呼，右边开关=语气词')))
+          h('div', { class: `${PREFIX}-persona-hint` }, '称呼与语气词互不影响，可以只开一个')))
     }
 
     /**
