@@ -6,11 +6,11 @@
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "dlaoshi-outfit"
+        "dsh-xiaod-pet"
       ]
     }
   },
   "dependencies": {
-    "dlaoshi-outfit": "file:C:/Users/you/Documents/dlaoshi-outfit"
+    "dsh-xiaod-pet": "file:C:/Users/you/Documents/dsh-xiaod-pet"
   }
 }

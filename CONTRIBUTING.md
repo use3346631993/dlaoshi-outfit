@@ -4,15 +4,15 @@
 
 ## 提交问题
 
-- **Bug**：请用 [Bug 报告](https://github.com/use3346631993/dlaoshi-outfit/issues/new?template=bug_report.yml) 模板，附上 DSH 版本、系统版本、复现步骤和相关日志
-- **功能建议**：用 [功能请求](https://github.com/use3346631993/dlaoshi-outfit/issues/new?template=feature_request.yml) 模板，说明使用场景比描述实现更有用
+- **Bug**：请用 [Bug 报告](https://github.com/use3346631993/dsh-xiaod-pet/issues/new?template=bug_report.yml) 模板，附上 DSH 版本、系统版本、复现步骤和相关日志
+- **功能建议**：用 [功能请求](https://github.com/use3346631993/dsh-xiaod-pet/issues/new?template=feature_request.yml) 模板，说明使用场景比描述实现更有用
 - **安全相关**：请不要开公开 issue，见 [SECURITY.md](SECURITY.md)
 
 ## 本地开发
 
 ```powershell
-git clone https://github.com/use3346631993/dlaoshi-outfit.git
-cd dlaoshi-outfit
+git clone https://github.com/use3346631993/dsh-xiaod-pet.git
+cd dsh-xiaod-pet
 npm run check   # 语法检查
 npm test        # 四套行为测试，全部无浏览器
 ```

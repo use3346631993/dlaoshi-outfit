@@ -19,7 +19,7 @@
  * unloading or HMR removes the whole outfit with its plugin row.
  */
 window.__ModuleLoader__.load({
-  id: 'dlaoshi-outfit',
+  id: 'dsh-xiaod-pet',
   factory(require) {
     const React = require('react')
     const h = React.createElement
@@ -1298,7 +1298,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         // module again (hot recompose) without a restart and without leaving a
         // duplicate stylesheet, class or slot occupant behind.
         if (typeof document.querySelectorAll === 'function') {
-          for (const stale of document.querySelectorAll('style[data-plugin="dlaoshi-outfit"]')) {
+          for (const stale of document.querySelectorAll('style[data-plugin="dsh-xiaod-pet"]')) {
             try { stale.remove() } catch (err) { /* already detached */ }
           }
         }
@@ -1315,7 +1315,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
 
         ctx.effect(() => {
           const tag = document.createElement('style')
-          tag.dataset.plugin = 'dlaoshi-outfit'
+          tag.dataset.plugin = 'dsh-xiaod-pet'
           tag.textContent = CSS
           document.head.appendChild(tag)
           return () => {
@@ -1323,7 +1323,7 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
           }
         }, 'dlaoshi-pet: stylesheet')
 
-        ctx.effect(() => ctx.theme.overrideTokens('dlaoshi-outfit', TOKENS),
+        ctx.effect(() => ctx.theme.overrideTokens('dsh-xiaod-pet', TOKENS),
           'dlaoshi-pet: deep-sea alias tokens')
 
         const occupy = (name, id, order, component) => ctx.slots.inject(name, () =>

@@ -1,5 +1,5 @@
-# dlaoshi-outfit bundle patch: one plugin row for the whole outfit.
+# dsh-xiaod-pet bundle patch: one plugin row for the whole outfit.
 # The Client half self-registers its slot occupants, so no other row is required.
 - insert:
-    - id: dlaoshi-outfit
-      name: dlaoshi-outfit
+    - id: dsh-xiaod-pet
+      name: dsh-xiaod-pet

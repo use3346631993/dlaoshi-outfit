@@ -22,15 +22,15 @@ composer, and a deep-sea blue theme — all in one zero-dependency DSH plugin.
 ### A. One command (recommended)
 
 ```powershell
-dsh plugin add dlaoshi-outfit
+dsh plugin add dsh-xiaod-pet
 ```
 
-Or in DSH: **Settings → Plugins → Add plugin** and enter `dlaoshi-outfit`, then restart DSH.
+Or in DSH: **Settings → Plugins → Add plugin** and enter `dsh-xiaod-pet`, then restart DSH.
 
 ### B. From GitHub
 
 ```
-https://github.com/use3346631993/dlaoshi-outfit.git
+https://github.com/use3346631993/dsh-xiaod-pet.git
 ```
 
 ### C. Manual (offline)
@@ -38,17 +38,17 @@ https://github.com/use3346631993/dlaoshi-outfit.git
 1. Copy the repository into your DSH profile's `node_modules`:
 
    ```powershell
-   git clone https://github.com/<you>/dlaoshi-outfit.git C:\Users\you\Documents\dlaoshi-outfit
-   New-Item -ItemType Directory -Force "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dlaoshi-outfit"
-   Copy-Item "C:\Users\you\Documents\dlaoshi-outfit\*" "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dlaoshi-outfit" -Recurse -Force
+   git clone https://github.com/<you>/dsh-xiaod-pet.git C:\Users\you\Documents\dsh-xiaod-pet
+   New-Item -ItemType Directory -Force "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-xiaod-pet"
+   Copy-Item "C:\Users\you\Documents\dsh-xiaod-pet\*" "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-xiaod-pet" -Recurse -Force
    ```
 
 2. Add the plugin to `%USERPROFILE%\.dsh\profiles\desktop\package.json`:
 
    ```json
    {
-     "dsh": { "profile": { "bundles": ["dlaoshi-outfit"] } },
-     "dependencies": { "dlaoshi-outfit": "file:C:/Users/you/Documents/dlaoshi-outfit" }
+     "dsh": { "profile": { "bundles": ["dsh-xiaod-pet"] } },
+     "dependencies": { "dsh-xiaod-pet": "file:C:/Users/you/Documents/dsh-xiaod-pet" }
    }
    ```
 

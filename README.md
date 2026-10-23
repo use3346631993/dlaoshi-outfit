@@ -5,13 +5,13 @@
 
 > 一个插件、一个开关：不想要的时候滑一下，DSH 立刻回到原样。
 
-[![test](https://github.com/use3346631993/dlaoshi-outfit/actions/workflows/ci.yml/badge.svg)](https://github.com/use3346631993/dlaoshi-outfit/actions/workflows/ci.yml)
+[![test](https://github.com/use3346631993/dsh-xiaod-pet/actions/workflows/ci.yml/badge.svg)](https://github.com/use3346631993/dsh-xiaod-pet/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![npm](https://img.shields.io/npm/v/dlaoshi-outfit.svg)](https://www.npmjs.com/package/dlaoshi-outfit)
-[![DeepSeek Harness plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1E4D8F.svg)](https://github.com/use3346631993/dlaoshi-outfit)
-[![release](https://img.shields.io/badge/release-v2.1.0-2F55E0.svg)](https://github.com/use3346631993/dlaoshi-outfit/releases/latest)
+[![npm](https://img.shields.io/npm/v/dsh-xiaod-pet.svg)](https://www.npmjs.com/package/dsh-xiaod-pet)
+[![DeepSeek Harness plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1E4D8F.svg)](https://github.com/use3346631993/dsh-xiaod-pet)
+[![release](https://img.shields.io/badge/release-v2.1.0-2F55E0.svg)](https://github.com/use3346631993/dsh-xiaod-pet/releases/latest)
 
-> **不想看源码？** 一条命令搞定：`dsh plugin add dlaoshi-outfit`
+> **不想看源码？** 一条命令搞定：`dsh plugin add dsh-xiaod-pet`
 
 ![预览](docs/preview.jpg)
 
@@ -38,13 +38,13 @@
 ### 方式 A：一条命令（推荐）
 
 ```powershell
-dsh plugin add dlaoshi-outfit
+dsh plugin add dsh-xiaod-pet
 ```
 
 或者在 DSH 里打开 **设置 → 插件 → 添加插件**，填：
 
 ```
-dlaoshi-outfit
+dsh-xiaod-pet
 ```
 
 装完**完全退出并重启** DSH。
@@ -52,18 +52,18 @@ dlaoshi-outfit
 ### 方式 B：从 GitHub 装
 
 ```
-https://github.com/use3346631993/dlaoshi-outfit.git
+https://github.com/use3346631993/dsh-xiaod-pet.git
 ```
 
 ### 方式 C：手动（离线 / 网络不好时）
 
-1. 把本仓库复制到 profile 的 `node_modules\dlaoshi-outfit`：
+1. 把本仓库复制到 profile 的 `node_modules\dsh-xiaod-pet`：
 
 ```powershell
-git clone https://github.com/use3346631993/dlaoshi-outfit.git C:\Users\你\Documents\dlaoshi-outfit
-mkdir "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dlaoshi-outfit" -Force
-Copy-Item "C:\Users\你\Documents\dlaoshi-outfit\*" `
-  "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dlaoshi-outfit" -Recurse -Force
+git clone https://github.com/use3346631993/dsh-xiaod-pet.git C:\Users\你\Documents\dsh-xiaod-pet
+mkdir "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-xiaod-pet" -Force
+Copy-Item "C:\Users\你\Documents\dsh-xiaod-pet\*" `
+  "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-xiaod-pet" -Recurse -Force
 ```
 
 2. 编辑 `%USERPROFILE%\.dsh\profiles\desktop\package.json`：
@@ -75,12 +75,12 @@ Copy-Item "C:\Users\你\Documents\dlaoshi-outfit\*" `
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "dlaoshi-outfit"
+        "dsh-xiaod-pet"
       ]
     }
   },
   "dependencies": {
-    "dlaoshi-outfit": "file:C:/Users/你/Documents/dlaoshi-outfit"
+    "dsh-xiaod-pet": "file:C:/Users/你/Documents/dsh-xiaod-pet"
   }
 }
 ```
@@ -150,7 +150,7 @@ Copy-Item "C:\Users\你\Documents\dlaoshi-outfit\*" `
 
 1. 完全退出 DSH（不是关窗口，要从托盘/任务管理器退出）
 2. 重新启动
-3. 设置 → 插件，确认 `dlaoshi-outfit` 存在且已启用
+3. 设置 → 插件，确认 `dsh-xiaod-pet` 存在且已启用
 4. 仍不出现 → 再重启一次（首次安装有时需要两轮：第一轮装包、第二轮组合）
 5. 打开浏览器控制台（F12），看有没有 `__ModuleLoader__` 相关报错
 
@@ -163,7 +163,7 @@ Copy-Item "C:\Users\你\Documents\dlaoshi-outfit\*" `
 确认安装的是 **2.1.3 或更高版本**。`2.1.0` 和 `2.1.1` 的客户端注册 id 与包名不一致，已被标记 deprecated：
 
 ```powershell
-dsh plugin add dlaoshi-outfit@2.1.3
+dsh plugin add dsh-xiaod-pet@2.1.3
 ```
 
 ### 开发时想热更新

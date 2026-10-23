@@ -75,15 +75,15 @@
 
 修复：网页端加载失败（`__ModuleLoader__` 未注册）。
 
-- 客户端 bundle 注册的插件 id 从 `@local/dsh-fatfish-outfit` 改为 `dlaoshi-outfit`，
+- 客户端 bundle 注册的插件 id 从 `@local/dsh-fatfish-outfit` 改为 `dsh-xiaod-pet`，
   与包名/加载器一致；此前网页端会报「导入失败：client-modules 未注册」。
 - 主题 `overrideTokens` 与样式表标记同步改名。
 
 ## 2.1.1 — 2026-10-22
 
-发布到 npm：`npm i dlaoshi-outfit` / `dsh plugin add dlaoshi-outfit`。
+发布到 npm：`npm i dsh-xiaod-pet` / `dsh plugin add dsh-xiaod-pet`。
 
-- 包名改为 `dlaoshi-outfit`，已发布到 npm 公共源
+- 包名改为 `dsh-xiaod-pet`，已发布到 npm 公共源
 - `cordis.patch.yml` 插件名同步
 - 市场描述关键词：鲸鱼正太、女仆装、二次元
 - 安装文档改为「一条命令 / GitHub / 手动」三种方式
@@ -95,7 +95,7 @@
 - 新增 `CONTRIBUTING.md`、`SECURITY.md`
 - 新增 Issue 模板（Bug 报告 / 功能请求）与 PR 模板
 - README 增加 CI / License / 插件 / Release 徽章与发布包入口
-- 首个 GitHub Release 与发布包 `dlaoshi-outfit-opensource.zip`
+- 首个 GitHub Release 与发布包 `dsh-xiaod-pet-opensource.zip`
 
 ## 2.0.0 — 2026-10-22
 
