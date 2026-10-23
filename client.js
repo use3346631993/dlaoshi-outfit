@@ -992,15 +992,23 @@ html.${SKIN_CLASS} body[data-ds-dark-theme] [data-turn-process-answer] {
         const check = () => {
           let visible = true
           try {
-            // Page identity:
-            //   settings.* slots   -> Settings (the standee stays, by request)
-            //   no chat composer   -> plugins / automation / any other page
-            //   chat composer here -> chat page (visible and not covered)
+            // Page identity, from markers verified against the live DOM:
+            //   plugins.item           -> plugin manager page: hide
+            //   settings.section/header-> Settings page: keep the standee (by request)
+            //   chat composer          -> chat page: show
+            //   none of the above      -> automation / other page: hide
             //
-            // The composer is the reliable chat-only marker: the conversation
-            // body wrapper stays mounted on other pages, so it cannot be used.
-            const inSettings = !!document.querySelector('[data-slot^="settings."]')
-            if (inSettings) {
+            // `settings.launcher` exists on *every* page (it is the sidebar
+            // entry), so the settings test must not use the bare `settings.`
+            // prefix: the plugin page carries both `settings.launcher` and
+            // `plugins.item`.
+            const inPlugins = !!document.querySelector('[data-slot="plugins.item"]')
+            const inSettings = !inPlugins && !!document.querySelector(
+              '[data-slot="settings.section"], [data-slot="settings.header"]',
+            )
+            if (inPlugins) {
+              visible = false
+            } else if (inSettings) {
               visible = true
             } else {
               const composer = document.querySelector('[data-composer-card]')
